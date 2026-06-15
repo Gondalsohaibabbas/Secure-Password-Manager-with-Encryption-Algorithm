@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main{
@@ -56,6 +57,7 @@ public class Main{
                 String password = input.nextLine();
 
                 hashing.insert(webName, userName, password);
+
             }
 
             if (num == 2) {
@@ -66,8 +68,8 @@ public class Main{
 
                 String info = hashing.search(web);
 
-                System.out.println("Password details :");
                 System.out.println(info);
+
             }
 
             if (num == 3) {
@@ -75,22 +77,24 @@ public class Main{
 
                 System.out.println("Enter Website Name :");
                 String web = input.nextLine();
+                System.out.println("Enter userName :");
+                String user = input.nextLine();
 
-                hashing.delete(web);
+                hashing.delete(web,user);
+
             }
 
             if (num == 4) {
                 input.nextLine();
-
                 System.out.println("Enter Website Name :");
                 String web = input.nextLine();
-
-                hashing.update(web);
+                System.out.println("Enter userName Name :");
+                String user = input.nextLine();
+                hashing.update(web,user);
             }
 
             if (num == 5) {
                 // Display all records in sorted order
-                System.out.println("======All Sorted Record======");
                 hashing.displaySorted();
             }
 

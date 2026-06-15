@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class AuthSecure {
     private String masterPassword;
     private String password;
@@ -7,6 +9,12 @@ public class AuthSecure {
 
         // Default master password used for login verification
         this.masterPassword=hashPassword("sohaib@1234");
+    }
+
+    //For MasterPassword reset
+    public void setMasterPassword(String password){
+        this.masterPassword=hashPassword(password);
+        System.out.println("Password updated successfully!");
     }
 
     // Encrypts password before storing it

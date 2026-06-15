@@ -21,8 +21,22 @@ public class Hash{
     // Insert new account into hash table
     public void insert(String name,String userName,String pass){
         AccountNode newNode = new AccountNode(name,userName,pass);
-
         int index= hashing.hashFunction(name);
+
+        AccountNode current = table[index];
+
+        while(current != null){
+
+            if(current.getWebName().equals(name) &&
+                    current.getUserName().equals(userName)){
+                System.out.println("Account already exists!");
+                return;
+            }
+
+            current = current.getNext();
+        }
+
+
 
         if(table[index]==null){
             table[index]=newNode;
@@ -30,7 +44,7 @@ public class Hash{
         }
         else{
             // Collision handling using linked list chaining
-            AccountNode current = table[index];
+            current = table[index];
 
             while(current.next!=null){
                 current= current.next;
@@ -45,37 +59,44 @@ public class Hash{
     public String search(String name){
         int index= hashing.hashFunction(name);
         AccountNode current = table[index];
+        AccountNode check= table[index];
+        if(current!=null){
+            System.out.println("Password details :");
+        }
 
         while(current!=null){
             if(current.getWebName().equals(name)){
-                return current.toString();
+                System.out.println(current);
             }
 
             current=current.next;
+        }
+        while(check!=null){
+            return "";
         }
 
         return "Account not found!";
     }
 
     // Delete account from hash table
-    public void delete(String name){
-        int index= hashing.hashFunction(name);
-        AccountNode current = table[index];
+    public void delete(String web,String user){
+        int index= hashing.hashFunction(web);
         AccountNode temp = table[index];
         AccountNode pre = null;
 
         if(table[index]==null){
             System.out.println("Account not found!");
+            return;
         }
 
-        if(temp.getWebName().equals(name)){
+        if(temp.getWebName().equals(web)&&temp.getUserName().equals(user)){
             table[index] = temp.getNext();
             System.out.println("Deleted successfully!");
             return;
         }
 
         while(temp!=null){
-            if(temp.getWebName().equals(name)){
+            if(temp.getWebName().equals(web)&&temp.getUserName().equals(user)){
                 assert pre != null;
                 pre.setNext(temp.getNext());
                 System.out.println("Deleted successfully!");
@@ -90,16 +111,15 @@ public class Hash{
     }
 
     // Update password of an existing account
-    public void update(String name){
+    public void update(String name,String user){
         Scanner input = new Scanner(System.in);
         int index = hashing.hashFunction(name);
         AccountNode current = table[index];
 
         while(current != null){
-            if(name.equals(current.getWebName())){
+            if(name.equals(current.getWebName())&&user.equals(current.getUserName())){
                 System.out.println("Enter new Password:");
                 String pass = input.nextLine();
-
                 pass = AuthSecure.encrypt(pass);
                 current.setPassword(pass);
 
@@ -123,11 +143,16 @@ public class Hash{
             AccountNode current = table[i];
 
             while(current!=null){
-
                 bst.root = bst.insert(bst.root,current);
 
                 current = current.getNext();
             }
+        }
+        if(bst.root == null){
+            System.out.println("No records found!");
+            return;
+        }else {
+            System.out.println("=====All Sorted Record=====");
         }
 
         bst.inOrder(bst.root);

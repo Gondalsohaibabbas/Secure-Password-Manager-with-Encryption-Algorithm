@@ -30,8 +30,9 @@ public class BST {
 
     // Inorder traversal displays records in sorted order
     public void inOrder(BSTNode root) {
-        if(root == null) return;
-
+        if(root == null){
+            return;
+        }
         inOrder(root.left);
         System.out.println(root.data);
         inOrder(root.right);
